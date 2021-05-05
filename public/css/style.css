@@ -1,0 +1,37 @@
+body
+{
+    width:90%;
+    margin: 2em auto;
+}
+
+.header, .content, .menu, .wcinka-msg
+{ 
+     margin: 0;
+     color: #333;
+     padding: 2.5em 2em 0;
+     border-bottom: 1px solid #eee;
+}
+
+.header
+{ 
+    text-align: center;
+}
+
+.err 
+{
+    padding: 1.5em 2em 0;
+    background-color: #f88;
+      
+}
+.inf 
+{
+    padding: 1.5em 2em 0;
+    background-color: #8f8;
+}
+
+ul
+{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
