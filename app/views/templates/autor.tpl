@@ -21,7 +21,7 @@
                         <td>{$dana["imie_autora"]}</td>
                         <td>{$dana["nazwisko_autora"]}</td>
                         <td>
-                            <a class="pure-button" href="{$conf->action_url}WyswietlEdytujAutora?id_autora={$dana["id_autora"]}" class="button special small">Edytuj</a>
+                            <a class="pure-button" href="{$conf->action_url}wyswietlEdytujAutora?id_autora={$dana["id_autora"]}" class="button special small">Edytuj</a>
                             <a class="pure-button" href="{$conf->action_url}usunAutora?id_autora={$dana["id_autora"]}" class="button special small">Usun</a>
                         </td>
                     </tr>

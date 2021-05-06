@@ -15,7 +15,9 @@
                     <th>autorzy</th>
                     <th>kategoria</th>
                     <th>dostepnosc</th>
-                    <th>operacje</th>
+                    {if $czyZalogowany == true}
+                        <th>operacje</th>
+                    {/if}
                 </tr>
             </thead>
             <tbody>
@@ -33,17 +35,18 @@
                         </td>
                         <td>{$dana["nazwa_kategori"]}</td>
                         <td>{$dana["dostepnosc"]}</td>
-                        <td>
-                            {if $czyZalogowany == true}
-                                {if $rolaUzytkownika < 2}
+                        {if $czyZalogowany == true}
+                            {if $rolaUzytkownika < 2}
+                                <td>
                                     <a class="pure-button" href="{$conf->action_url}WyswietlEdytujKsiazke?id_ksiazki={$dana["id_ksiazki"]}" class="button special small">Edytuj</a>
                                     <a class="pure-button" href="{$conf->action_url}usunKsiazke?id_ksiazki={$dana["id_ksiazki"]}" class="button special small">Usun</a>
-                                {/if}
-                                {if $dana["dostepnosc"] > 0}
-                                    <a class="pure-button" href="{$conf->action_url}ZarezerwujKsiazke?id_ksiazki={$dana["id_ksiazki"]}" class="button special small">Zarezerwuj</a>
-                                {/if}
                             {/if}
-                        </td>
+                            {if $dana["dostepnosc"] > 0}
+                                    <a class="pure-button" href="{$conf->action_url}ZarezerwujKsiazke?id_ksiazki={$dana["id_ksiazki"]}" class="button special small">Zarezerwuj</a>
+                                </td>
+                            {/if}
+                        {/if}
+                        
                     </tr>
                 {/foreach}
             </tbody>

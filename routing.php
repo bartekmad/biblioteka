@@ -22,4 +22,7 @@ Utils::addRoute('panelUzytkownikow', 'UzytkownicyCtrl');
 
 Utils::addRoute('panelAutorow', 'AutorCtrl', ['0','1']);
 Utils::addRoute('wyswietlDodajAutora', 'AutorCtrl', ['0','1']);
+Utils::addRoute('wyswietlEdytujAutora', 'AutorCtrl', ['0','1']);
 Utils::addRoute('dodajAutora', 'AutorCtrl', ['0','1']);
+Utils::addRoute('edytujAutora', 'AutorCtrl', ['0','1']);
+Utils::addRoute('usunAutora', 'AutorCtrl', ['0','1']);

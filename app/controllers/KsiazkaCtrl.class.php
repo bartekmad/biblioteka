@@ -159,7 +159,24 @@ class KsiazkaCtrl
     
     public function action_usunKsiazke()
     {
-        
+        try
+        {
+            App::getDB()->delete("KSIAZKA", [
+                "id_ksiazki" => $_GET['id_ksiazki']
+            ]);
+            App::getDB()->delete("AUTORZY_KSIAZKI", [
+                "id_ksiazki" => $_GET['id_ksiazki']
+            ]);
+        }
+        catch (PDOException $e)
+        {
+            App::getMessages()->addMessage(new Message('Wystąpił błąd podczas usuwania książki.', Message::ERROR));
+        }
+        finally
+        {
+            App::getMessages()->addMessage(new Message('Pomyślnie usunięto książkę.', Message::INFO));
+        }
+        $this->action_przegladanieKsiazek();  
     }
     
     public function action_ZarezerwujKsiazke()

@@ -42,7 +42,11 @@ class UzytkownicyCtrl {
     
     private function pobierzListeUzytkownikow()
     {
-        $this->listaUzytkownikow = App::getDB()->select("UZYTKOWNIK", ["id_uzytkownika","login"]);
+        $this->czyAdmin = 0 == intval(SessionUtils::load("user",true)['id_uprawnienia']);
+        if ($this->czyAdmin == true)
+            $this->listaUzytkownikow = App::getDB()->select("UZYTKOWNIK", ["id_uzytkownika","login"]);
+        else 
+            $this->listaUzytkownikow = App::getDB()->select("UZYTKOWNIK", ["id_uzytkownika","login"], ["id_uprawnienia[>]"=>0]);
     }
     
     public function action_dodajUzytkownika()
@@ -127,7 +131,7 @@ class UzytkownicyCtrl {
         {
             foreach($wynik as $dana)
             {
-                if ($this->form->login <= $dana["imie"] && $this->form->login <= $dana["nazwisko"])
+                if ($this->form->login == $dana["imie"] && $this->form->login == $dana["nazwisko"])
                 {
                     App::getMessages()->addMessage(new Message('Użytkownik o podanym imieniu oraz nazwisku istnieje w bazie!', Message::ERROR));
                     $walidacja = false;

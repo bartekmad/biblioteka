@@ -21,8 +21,8 @@
                 <select list="id_autorow" id="id_autorow" name="id_autorow" value="{$form->id_autorow}">
                     <datalist id="id_autorow">
                         {if $listaAutorow}
-                            {foreach $listaAutorow as $dana}
-                                <option value="{$dana["id_autora"]}"{if $dana["id_autora"]==$wybranyAutor}selected{/if}>{$dana["imie_autora"]} {$dana["nazwisko_autora"]}</option>
+                            {foreach $listaAutorow as $autor}
+                                <option value="{$autor["id_autora"]}"{if $autor["id_autora"]==$wybranyAutor}selected{/if}>{$autor["imie_autora"]} {$autor["nazwisko_autora"]}</option>
                             {/foreach}
                         {/if}
                     </datalist>
