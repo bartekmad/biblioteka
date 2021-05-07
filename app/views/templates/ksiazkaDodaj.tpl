@@ -18,7 +18,7 @@
                     </datalist>
                 </select>
             <label for="id_autorow">Autorzy: </label>
-                <select list="id_autorow" id="id_autorow" name="id_autorow" value="{$form->id_autorow}">
+                <select list="id_autorow" id="id_autorow" multiple="multiple" name="id_autorow[]" value="{$form->id_autorow}">
                     <datalist id="id_autorow">
                         {if $listaAutorow}
                             {foreach $listaAutorow as $autor}

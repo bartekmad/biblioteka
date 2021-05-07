@@ -74,7 +74,7 @@ class KsiazkaCtrl
         $this->form->tytul = ParamUtils::getFromRequest('tytul',true,'Błędne wywołanie aplikacji');
         $this->form->dostepnosc = ParamUtils::getFromRequest('dostepnosc',true,'Błędne wywołanie aplikacji');
         $this->form->id_kategorii = ParamUtils::getFromRequest('id_kategorii',true,'Błędne wywołanie aplikacji');
-        $this->form->id_autorow = ParamUtils::getFromRequest('id_kategorii',true,'Błędne wywołanie aplikacji');
+        $this->form->id_autorow = ParamUtils::getFromRequest('id_autorow',true,'Błędne wywołanie aplikacji');
     }
     
     private function czyWpisaneWartosciDodawania()
@@ -134,7 +134,7 @@ class KsiazkaCtrl
                 "tytul"=>$this->form->tytul
                 ]
             );
-            foreach (str_split($this->form->id_autorow)as $dana) 
+            foreach ($this->form->id_autorow as $dana) 
             {
                 App::getDB()->insert("AUTORZY_KSIAZKI", [
                     "id_ksiazki" => intval($idKsiazki[0]['id_ksiazki']),
