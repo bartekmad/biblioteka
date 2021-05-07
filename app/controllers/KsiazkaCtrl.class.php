@@ -12,13 +12,13 @@ class KsiazkaCtrl
 {
     private $form;
     private $result;
+    private $result2;
     private $autorzy;
     private $rolaUzytkownika;
     private $listaKategorii;
     private $listaAutorow;
-    private $wybranaKategoria;
-    private $wybranyAutor;
     private $czyZalogowany;
+    private $czyEdytuj;
     
     public function __construct()
     {
@@ -53,9 +53,10 @@ class KsiazkaCtrl
     
     public function action_wyswietlDodajKsiazke()
     {
+        $this->czyEdytuj = false;
         $this->listaKategorii = App::getDB()->select("KATEGORIA", "*");
         $this->listaAutorow = App::getDB()->select("AUTOR", "*");
-        $this->generujWidokDodaj();
+        $this->generujWidokDodajEdytuj();
     }
     
     public function action_dodajKsiazke()
@@ -152,9 +153,75 @@ class KsiazkaCtrl
         }
     }
     
+    public function action_wyswietlEdytujKsiazke()
+    {
+        $this->czyEdytuj = true;
+        $this->result = App::getDB()->select("KSIAZKA",[
+            "id_ksiazki",
+            "tytul",
+            "id_kategorii",
+            "dostepnosc"
+            ],
+            [
+            "id_ksiazki"=>$_GET['id_ksiazki']
+            ]
+        );
+        $this->result2 = App::getDB()->select("AUTORZY_KSIAZKI",[
+            "id_autora"
+            ],
+            [
+            "id_ksiazki"=>$_GET['id_ksiazki']
+            ]
+        );
+        $this->listaKategorii = App::getDB()->select("KATEGORIA", "*");
+        $this->listaAutorow = App::getDB()->select("AUTOR", "*");
+        $this->generujWidokDodajEdytuj();
+    }
+    
     public function action_edytujKsiazke()
     {
-        
+        $this->pobierzParametryDodawania();
+        if ($this->czyWpisaneWartosciDodawania())
+        {
+            if ($this->walidujDodawanieKsiazki())
+                $this->zapiszDaneNaBazeEdytowanie();
+        }
+        $this->action_wyswietlEdytujKsiazke();  
+    }
+    
+    private function zapiszDaneNaBazeEdytowanie()
+    {
+        try
+        {
+            App::getDB()->delete("AUTORZY_KSIAZKI", [
+                "id_ksiazki" => $_GET['id_ksiazki']
+            ]);
+            
+            foreach ($this->form->id_autorow as $dana) 
+            {
+                App::getDB()->insert("AUTORZY_KSIAZKI", [
+                    "id_ksiazki" => $_GET['id_ksiazki'],
+                    "id_autora" => intval($dana)
+                ]);
+            }
+
+            App::getDB()->update("KSIAZKA", [
+                "tytul" => strval($this->form->tytul),
+                "id_kategorii" => intval($this->form->id_kategorii),
+                "dostepnosc" => intval($this->form->dostepnosc),
+                ],
+                [
+                "id_ksiazki" => $_GET['id_ksiazki']
+            ]);
+        }
+        catch (PDOException $e)
+        {
+            App::getMessages()->addMessage(new Message('Wystąpił błąd podczas edytowania książki.', Message::ERROR));
+        }
+        finally
+        {
+            App::getMessages()->addMessage(new Message('Pomyślnie zedytowano książkę.', Message::INFO));
+        }
     }
     
     public function action_usunKsiazke()
@@ -228,14 +295,15 @@ class KsiazkaCtrl
         App::getSmarty()->display('ksiazka.tpl');
     }
     
-    private function generujWidokDodaj()
+    private function generujWidokDodajEdytuj()
     {
         App::getSmarty()->assign('page_title','lista książek');
         App::getSmarty()->assign('listaKategorii',$this->listaKategorii);
         App::getSmarty()->assign('listaAutorow',$this->listaAutorow);
-        App::getSmarty()->assign('wybranaKategoria',$this->wybranaKategoria);
-        App::getSmarty()->assign('wybranyAutor',$this->wybranyAutor);
         App::getSmarty()->assign('form',$this->form);
+        App::getSmarty()->assign('czyEdytuj',$this->czyEdytuj);
+        App::getSmarty()->assign('result',$this->result);
+        App::getSmarty()->assign('result2',$this->result2);
         
         App::getSmarty()->display('ksiazkaDodaj.tpl');
     }

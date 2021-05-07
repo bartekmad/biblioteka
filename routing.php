@@ -10,6 +10,7 @@ Utils::addRoute('logout', 'LoginCtrl');
 
 Utils::addRoute('przegladanieKsiazek', 'KsiazkaCtrl');
 Utils::addRoute('wyswietlDodajKsiazke', 'KsiazkaCtrl', ['0','1']);
+Utils::addRoute('wyswietlEdytujKsiazke', 'KsiazkaCtrl', ['0','1']);
 Utils::addRoute('dodajKsiazke', 'KsiazkaCtrl', ['0','1']);
 Utils::addRoute('edytujKsiazke', 'KsiazkaCtrl', ['0','1']);
 Utils::addRoute('usunKsiazke', 'KsiazkaCtrl', ['0','1']);

@@ -38,7 +38,7 @@
                         {if $czyZalogowany == true}
                             {if $rolaUzytkownika < 2}
                                 <td>
-                                    <a class="pure-button" href="{$conf->action_url}WyswietlEdytujKsiazke?id_ksiazki={$dana["id_ksiazki"]}" class="button special small">Edytuj</a>
+                                    <a class="pure-button" href="{$conf->action_url}wyswietlEdytujKsiazke?id_ksiazki={$dana["id_ksiazki"]}" class="button special small">Edytuj</a>
                                     <a class="pure-button" href="{$conf->action_url}usunKsiazke?id_ksiazki={$dana["id_ksiazki"]}" class="button special small">Usun</a>
                             {/if}
                             {if $dana["dostepnosc"] > 0}

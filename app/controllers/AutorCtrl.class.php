@@ -28,7 +28,7 @@ class AutorCtrl
     public function action_wyswietlDodajAutora()
     {
         $this->czyEdytuj = false;
-        $this->generujWidokDodaj();
+        $this->generowanieWidokowEdycjiDodawania();
     }
     
     public function action_dodajAutora()
@@ -124,7 +124,7 @@ class AutorCtrl
             "id_autora"=>$_GET['id_autora']
             ]
         );
-        $this->generujWidokEdytuj();
+        $this->generowanieWidokowEdycjiDodawania();
     }
     
     public function action_edytujAutora()
@@ -186,16 +186,6 @@ class AutorCtrl
         App::getSmarty()->assign('result',$this->result);
         
         App::getSmarty()->display('autor.tpl');
-    }
-    
-    private function generujWidokDodaj()
-    {
-        $this->generowanieWidokowEdycjiDodawania();
-    }
-    
-    private function generujWidokEdytuj()
-    {
-        $this->generowanieWidokowEdycjiDodawania();
     }
     
     private function generowanieWidokowEdycjiDodawania()
