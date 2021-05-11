@@ -165,6 +165,7 @@ class UzytkownicyCtrl
                 "nazwisko" => strval($this->form->nazwisko),
                 "id_uprawnienia" => $idUprawnienia
             ]);
+            App::getMessages()->addMessage(new Message('Pomyślnie dodano użytkownika.', Message::INFO));
         }
         catch (PDOException $e)
         {
@@ -172,7 +173,6 @@ class UzytkownicyCtrl
         }
         finally
         {
-            App::getMessages()->addMessage(new Message('Pomyślnie dodano użytkownika.', Message::INFO));
         }
     }
     
@@ -225,6 +225,7 @@ class UzytkownicyCtrl
                 [
                 "id_uzytkownika" => $this->form->uzytkownik
             ]);
+            App::getMessages()->addMessage(new Message('Pomyślnie zaktualizowano hasło.', Message::INFO));
         }
         catch (PDOException $e)
         {
@@ -232,7 +233,6 @@ class UzytkownicyCtrl
         }
         finally
         {
-            App::getMessages()->addMessage(new Message('Pomyślnie zaktualizowano hasło.', Message::INFO));
         }
     }
     

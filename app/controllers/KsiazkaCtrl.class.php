@@ -155,6 +155,7 @@ class KsiazkaCtrl
                     "id_autora" => intval($dana)
                 ]);
             }
+            App::getMessages()->addMessage(new Message('Pomyślnie dodano książkę.', Message::INFO));
         }
         catch (PDOException $e)
         {
@@ -162,7 +163,6 @@ class KsiazkaCtrl
         }
         finally
         {
-            App::getMessages()->addMessage(new Message('Pomyślnie dodano książkę.', Message::INFO));
         }
     }
     
@@ -226,6 +226,7 @@ class KsiazkaCtrl
                 [
                 "id_ksiazki" => $_GET['id_ksiazki']
             ]);
+            App::getMessages()->addMessage(new Message('Pomyślnie zedytowano książkę.', Message::INFO));
         }
         catch (PDOException $e)
         {
@@ -233,7 +234,6 @@ class KsiazkaCtrl
         }
         finally
         {
-            App::getMessages()->addMessage(new Message('Pomyślnie zedytowano książkę.', Message::INFO));
         }
     }
     
@@ -241,12 +241,29 @@ class KsiazkaCtrl
     {
         try
         {
-            App::getDB()->delete("KSIAZKA", [
+            $rezerwacjeKsiazki = App::getDB()->select("REZERWACJA",[
+                "id_ksiazki"
+                ],
+                [
                 "id_ksiazki" => $_GET['id_ksiazki']
-            ]);
-            App::getDB()->delete("AUTORZY_KSIAZKI", [
-                "id_ksiazki" => $_GET['id_ksiazki']
-            ]);
+                ]
+            );
+            
+            if (count($rezerwacjeKsiazki) > 0)
+            {
+                App::getMessages()->addMessage(new Message('Nie można usunąć książki, która była zarezerwowana.', Message::ERROR));
+                throw new PDOException();
+            }
+            else
+            {
+                App::getDB()->delete("KSIAZKA", [
+                    "id_ksiazki" => $_GET['id_ksiazki']
+                ]);
+                App::getDB()->delete("AUTORZY_KSIAZKI", [
+                    "id_ksiazki" => $_GET['id_ksiazki']
+                ]);
+            }
+            App::getMessages()->addMessage(new Message('Pomyślnie usunięto książkę.', Message::INFO));
         }
         catch (PDOException $e)
         {
@@ -254,9 +271,8 @@ class KsiazkaCtrl
         }
         finally
         {
-            App::getMessages()->addMessage(new Message('Pomyślnie usunięto książkę.', Message::INFO));
+            $this->action_przegladanieKsiazek(); 
         }
-        $this->action_przegladanieKsiazek();  
     }
     
     public function action_ZarezerwujKsiazke()
@@ -284,6 +300,7 @@ class KsiazkaCtrl
                 [
                 "id_ksiazki" => $_GET['id_ksiazki']
             ]);
+            App::getMessages()->addMessage(new Message('Pomyślnie zarezerwowano książkę.', Message::INFO));
         }
         catch (PDOException $e)
         {
@@ -291,9 +308,8 @@ class KsiazkaCtrl
         }
         finally
         {
-            App::getMessages()->addMessage(new Message('Pomyślnie zarezerwowano książkę.', Message::INFO));
+            $this->action_przegladanieKsiazek();  
         }
-        $this->action_przegladanieKsiazek();  
     }
     
     private function generujWidokWyswietl()

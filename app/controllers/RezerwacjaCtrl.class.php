@@ -85,6 +85,7 @@ class RezerwacjaCtrl
                 [
                 "id_ksiazki" => $idKsiazki[0]['id_ksiazki']
             ]);
+            App::getMessages()->addMessage(new Message('Pomyślnie usunięto rezerwację.', Message::INFO));
         }
         catch (PDOException $e)
         {
@@ -92,9 +93,8 @@ class RezerwacjaCtrl
         }
         finally
         {
-            App::getMessages()->addMessage(new Message('Pomyślnie usunięto rezerwację.', Message::INFO));
+            $this->action_przegladanieRezerwacji(); 
         }
-        $this->action_przegladanieRezerwacji();  
     }
     
     public function action_dokonajWypozyczenia()
@@ -107,6 +107,7 @@ class RezerwacjaCtrl
                 [
                 "id_rezerwacji"=>$_GET['id_rezerwacji']
             ]);
+            App::getMessages()->addMessage(new Message('Pomyślnie wypożyczono książkę.', Message::INFO));
         }
         catch (PDOException $e)
         {
@@ -114,9 +115,8 @@ class RezerwacjaCtrl
         }
         finally
         {
-            App::getMessages()->addMessage(new Message('Pomyślnie wypożyczono książkę.', Message::INFO));
+            $this->action_przegladanieRezerwacji(); 
         }
-        $this->action_przegladanieRezerwacji();  
     }
     
     public function action_zarejestrujZwrot()
@@ -129,6 +129,7 @@ class RezerwacjaCtrl
                 [
                 "id_rezerwacji"=>$_GET['id_rezerwacji']
             ]);
+            App::getMessages()->addMessage(new Message('Pomyślnie zwrócono książkę.', Message::INFO));
         }
         catch (PDOException $e)
         {
@@ -136,9 +137,8 @@ class RezerwacjaCtrl
         }
         finally
         {
-            App::getMessages()->addMessage(new Message('Pomyślnie zwrócono książkę.', Message::INFO));
+            $this->action_przegladanieRezerwacji(); 
         }
-        $this->action_przegladanieRezerwacji();  
     }
     
     private function generujWidokWyswietl()

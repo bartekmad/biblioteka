@@ -101,6 +101,7 @@ class AutorCtrl
                 "imie_autora" => strval($this->form->imie),
                 "nazwisko_autora" => strval($this->form->nazwisko)
             ]);
+            App::getMessages()->addMessage(new Message('Pomyślnie dodano autora.', Message::INFO));
         }
         catch (PDOException $e)
         {
@@ -108,7 +109,6 @@ class AutorCtrl
         }
         finally
         {
-            App::getMessages()->addMessage(new Message('Pomyślnie dodano autora.', Message::INFO));
         }
     }
     
@@ -149,6 +149,7 @@ class AutorCtrl
                 [
                 "id_autora" => $_GET['id_autora']
             ]);
+            App::getMessages()->addMessage(new Message('Pomyślnie zedytowano autora.', Message::INFO));
         }
         catch (PDOException $e)
         {
@@ -156,7 +157,6 @@ class AutorCtrl
         }
         finally
         {
-            App::getMessages()->addMessage(new Message('Pomyślnie zedytowano autora.', Message::INFO));
         }
     }
     
@@ -164,9 +164,26 @@ class AutorCtrl
     {
         try
         {
-            App::getDB()->delete("AUTOR", [
-                "id_autora" => $_GET['id_autora']
-            ]);
+            $ksiazkiAutora = App::getDB()->select("AUTORZY_KSIAZKI",[
+                "id_autora"
+                ],
+                [
+                "id_autora"=>$_GET['id_autora']
+                ]
+            );
+            
+            if (count($ksiazkiAutora) > 0)
+            {
+                App::getMessages()->addMessage(new Message('Nie można usunąć autora, który posiada książkę.', Message::ERROR));
+                throw new PDOException();
+            }
+            else 
+            {
+                App::getDB()->delete("AUTOR", [
+                    "id_autora" => $_GET['id_autora']
+                ]);  
+            }
+            App::getMessages()->addMessage(new Message('Pomyślnie usunięto autora.', Message::INFO));
         }
         catch (PDOException $e)
         {
@@ -174,9 +191,8 @@ class AutorCtrl
         }
         finally
         {
-            App::getMessages()->addMessage(new Message('Pomyślnie dodano autora.', Message::INFO));
+            $this->action_panelAutorow(); 
         }
-        $this->action_panelAutorow();  
     }
     
     private function generujWidokWyswietl()
