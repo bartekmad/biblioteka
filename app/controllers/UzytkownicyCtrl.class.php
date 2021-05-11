@@ -7,8 +7,8 @@ use core\Message;
 use core\ParamUtils;
 use PDOException;
 
-class UzytkownicyCtrl {
-    
+class UzytkownicyCtrl
+{
     private $form;
     private $listaUzytkownikow;
     private $czyAdmin;
@@ -37,16 +37,25 @@ class UzytkownicyCtrl {
     
     private function ustawOperacje()
     {
-        $this->form->operacja = ParamUtils::getFromRequest('operacja',true,'Błędne wywołanie aplikacji');
+        if (ParamUtils::getFromRequest('operacja') == null)
+            $this->form->operacja = 1;
+        else
+            $this->form->operacja = ParamUtils::getFromRequest('operacja',true,'Błędne wywołanie aplikacji');
     }
     
     private function pobierzListeUzytkownikow()
     {
+        $czyZwyklyUser = 2 == intval(SessionUtils::load("user",true)['id_uprawnienia']);
         $this->czyAdmin = 0 == intval(SessionUtils::load("user",true)['id_uprawnienia']);
         if ($this->czyAdmin == true)
             $this->listaUzytkownikow = App::getDB()->select("UZYTKOWNIK", ["id_uzytkownika","login"]);
-        else 
+        else if (!$czyZwyklyUser)
             $this->listaUzytkownikow = App::getDB()->select("UZYTKOWNIK", ["id_uzytkownika","login"], ["id_uprawnienia[>]"=>0]);
+        else
+        {
+            $idUsera = intval(SessionUtils::load("user",true)['id_uzytkownika']);
+            $this->listaUzytkownikow = App::getDB()->select("UZYTKOWNIK", ["id_uzytkownika","login"], ["id_uzytkownika"=>$idUsera]);
+        }
     }
     
     public function action_dodajUzytkownika()

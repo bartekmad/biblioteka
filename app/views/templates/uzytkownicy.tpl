@@ -1,7 +1,7 @@
 {extends file="main.tpl"}
 
 {block name=content}
-{if $czyZalogowany == true}    
+{if $czyZalogowany == true && $poziomUprawnien < 2}    
 <form class="pure-form pure-form-stacked" action="{$conf->action_url}zarzadzajUzytkownikami" method="post">
     <label for="typ_operacji">Użytkownik: </label>    
     <select list="typ_operacji" id="typ_operacji" name="operacja" value="{$form->operacja}">

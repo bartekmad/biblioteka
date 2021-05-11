@@ -40,11 +40,19 @@
             </li>
 {/if}
 {if count($conf->roles)>0}
+            {if isset($conf->roles['2'])}
+            <li class="pure-menu-item">
+                <a href="{$conf->action_root}zarzadzajUzytkownikami" class="pure-menu-link">Zmień hasło</a>
+            </li>
+            {/if}
             <li class="pure-menu-item">
                 <a href="{$conf->action_root}przegladanieKsiazek" class="pure-menu-link">Przeglądaj książki</a>
             </li>
             <li class="pure-menu-item">
                 <a href="{$conf->action_root}logout" class="pure-menu-link">Wyloguj</a>
+            </li>
+            <li class="pure-menu-item">
+                <a href="{$conf->action_root}przegladanieRezerwacji" class="pure-menu-link">Przeglądaj rezerwacje</a>
             </li>
 {/if}
         </ul>

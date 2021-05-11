@@ -5,7 +5,16 @@
     <a class="pure-button" href="{$conf->action_url}wyswietlDodajKsiazke" class="button special small">Dodaj książkę</a>
     <br><br>
 {/if}
+
 {if $result}
+    <form class="pure-form pure-form-stacked" action="{$conf->action_url}przegladanieKsiazek" method="post">
+        <fieldset>
+            <label for="szukajka">Tytuł: </label>
+            <input id="szukajka" type="text" name="szukajka" value="{$form->szukajka}">
+        </fieldset>
+        <button type="submit" class="pure-button">Szukaj książki</button>
+    </form>
+        <br><br>
     {if (count($result) > 0)}
         <table class="pure-table pure-table-horizontal">
             <thead>
@@ -36,8 +45,8 @@
                         <td>{$dana["nazwa_kategori"]}</td>
                         <td>{$dana["dostepnosc"]}</td>
                         {if $czyZalogowany == true}
-                            {if $rolaUzytkownika < 2}
                                 <td>
+                            {if $rolaUzytkownika < 2}
                                     <a class="pure-button" href="{$conf->action_url}wyswietlEdytujKsiazke?id_ksiazki={$dana["id_ksiazki"]}" class="button special small">Edytuj</a>
                                     <a class="pure-button" href="{$conf->action_url}usunKsiazke?id_ksiazki={$dana["id_ksiazki"]}" class="button special small">Usun</a>
                             {/if}

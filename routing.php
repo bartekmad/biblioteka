@@ -18,7 +18,7 @@ Utils::addRoute('ZarezerwujKsiazke', 'KsiazkaCtrl', ['0','1','2']);
 
 Utils::addRoute('zarzadzajUzytkownikami', 'UzytkownicyCtrl');
 Utils::addRoute('dodajUzytkownika', 'UzytkownicyCtrl');
-Utils::addRoute('edytujUzytkownika', 'UzytkownicyCtrl', ['0','1']);
+Utils::addRoute('edytujUzytkownika', 'UzytkownicyCtrl');
 Utils::addRoute('panelUzytkownikow', 'UzytkownicyCtrl');
 
 Utils::addRoute('panelAutorow', 'AutorCtrl', ['0','1']);
@@ -27,3 +27,8 @@ Utils::addRoute('wyswietlEdytujAutora', 'AutorCtrl', ['0','1']);
 Utils::addRoute('dodajAutora', 'AutorCtrl', ['0','1']);
 Utils::addRoute('edytujAutora', 'AutorCtrl', ['0','1']);
 Utils::addRoute('usunAutora', 'AutorCtrl', ['0','1']);
+
+Utils::addRoute('przegladanieRezerwacji', 'RezerwacjaCtrl');
+Utils::addRoute('anulujRezerwacje', 'RezerwacjaCtrl');
+Utils::addRoute('dokonajWypozyczenia', 'RezerwacjaCtrl', ['0','1']);
+Utils::addRoute('zarejestrujZwrot', 'RezerwacjaCtrl', ['0','1']);

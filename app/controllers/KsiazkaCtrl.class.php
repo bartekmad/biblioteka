@@ -28,6 +28,18 @@ class KsiazkaCtrl
     public function action_przegladanieKsiazek()
     {
         $this->rolaUzytkownika = intval(SessionUtils::load("user",true)['id_uprawnienia']);
+        $this->form->szukajka = ParamUtils::getFromRequest('szukajka');
+        
+        $search_params = [];
+	if (isset($this->form->szukajka)) 
+            $search_params['tytul[~]'] = $this->form->szukajka.'%';                
+                        
+	$num_params = sizeof($search_params); 
+	if ($num_params > 1) {
+            $where = [ "AND" => &$search_params ];
+	} else {
+            $where = &$search_params;
+	}
         
         $this->result = App::getDB()->select("KSIAZKA", [
                 "[>]KATEGORIA" => ["id_kategorii" => "id_kategorii"]
@@ -37,7 +49,8 @@ class KsiazkaCtrl
                 "KSIAZKA.dostepnosc",
                 "KSIAZKA.id_ksiazki",
                 "KATEGORIA.nazwa_kategori"
-            ]);
+            ],
+            $where);
         
         $this->autorzy = App::getDB()->select("AUTOR", [
                 "[>]AUTORZY_KSIAZKI" => ["id_autora" => "id_autora"]
@@ -286,6 +299,7 @@ class KsiazkaCtrl
     private function generujWidokWyswietl()
     {
         App::getSmarty()->assign('page_title','lista książek');
+        App::getSmarty()->assign('form',$this->form);
         App::getSmarty()->assign('result',$this->result);
         App::getSmarty()->assign('autorzy',$this->autorzy);
         App::getSmarty()->assign('rolaUzytkownika',$this->rolaUzytkownika);
