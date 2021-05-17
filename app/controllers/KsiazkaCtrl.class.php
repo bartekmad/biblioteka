@@ -35,10 +35,10 @@ class KsiazkaCtrl
             $search_params['tytul[~]'] = $this->form->szukajka.'%';                
                         
 	$num_params = sizeof($search_params); 
-	if ($num_params > 1) {
+	if (intval($num_params) >= 1) {
             $where = [ "AND" => &$search_params ];
 	} else {
-            $where = &$search_params;
+            $where = ["ORDER" => "tytul"];
 	}
         
         $this->result = App::getDB()->select("KSIAZKA", [

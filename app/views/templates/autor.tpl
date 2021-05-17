@@ -8,7 +8,7 @@
         <table class="pure-table pure-table-horizontal">
             <thead>
                 <tr>
-                    <th>lp.</th>
+                    <th>id autora</th>
                     <th>imię</th>
                     <th>nazwisko</th>
                     <th>operacje</th>

@@ -19,7 +19,7 @@
         <table class="pure-table pure-table-horizontal">
             <thead>
                 <tr>
-                    <th>lp.</th>
+                    <th>id książki</th>
                     <th>tytuł</th>
                     <th>autorzy</th>
                     <th>kategoria</th>

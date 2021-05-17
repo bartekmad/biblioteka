@@ -35,7 +35,8 @@ class RezerwacjaCtrl
                     "REZERWACJA.data_wypozyczenia",
                     "REZERWACJA.data_zwrotu"
                 ],
-                ["UZYTKOWNIK.id_uzytkownika"=>$idUsera]);    
+                ["UZYTKOWNIK.id_uzytkownika"=>$idUsera,
+                "ORDER" => ["id_rezerwacji" => "DESC"]]);    
         }
         else
         {
@@ -50,7 +51,8 @@ class RezerwacjaCtrl
                     "REZERWACJA.data_rezerwacji",
                     "REZERWACJA.data_wypozyczenia",
                     "REZERWACJA.data_zwrotu"
-                ]);
+                ],
+                ["ORDER" => ["id_rezerwacji" => "DESC"]]);
         }
         
         $this->generujWidokWyswietl();

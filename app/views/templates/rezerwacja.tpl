@@ -6,7 +6,7 @@
         <table class="pure-table pure-table-horizontal">
             <thead>
                 <tr>
-                    <th>lp.</th>
+                    <th>id rezerwacji</th>
                     {if $rolaUzytkownika < 2}<th>użytkownik</th>{/if}
                     <th>książka</th>
                     <th>data rezerwacji</th>

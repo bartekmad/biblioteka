@@ -21,7 +21,7 @@ class AutorCtrl
     
     public function action_panelAutorow()
     {
-        $this->result = App::getDB()->select("AUTOR", "*");
+        $this->result = App::getDB()->select("AUTOR", "*", ["ORDER" => "imie_autora"]);
         $this->generujWidokWyswietl();
     }
     
@@ -211,6 +211,6 @@ class AutorCtrl
         App::getSmarty()->assign('czyEdytuj',$this->czyEdytuj);
         App::getSmarty()->assign('result',$this->result);
         
-        App::getSmarty()->display('AutorDodaj.tpl');
+        App::getSmarty()->display('autorDodaj.tpl');
     }
 }
