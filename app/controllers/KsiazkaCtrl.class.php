@@ -111,6 +111,12 @@ class KsiazkaCtrl
             $walidacja = false;
         }
         
+        if ($this->form->dostepnosc < 0)
+        {
+            App::getMessages()->addMessage(new Message('Dostępność nie może być wartością ujemną!', Message::ERROR));
+            $walidacja = false;
+        }
+        
         $wynik = App::getDB()->select("KSIAZKA",[
             "tytul",
             ],
